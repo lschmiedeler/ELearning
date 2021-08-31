@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    	<title>E-Learning System</title>
+  	</head>
+  	
+  	<link href="css/global.css" rel="stylesheet" type="text/css">
+	<body>
+  		<p style="color: #ff4411;font-size: 48px;font-family: 'Signika', sans-serif;padding-bottom: 10px;text-align:center">
+  		ELearning Dashboard
+  		</p>
+  		<h1>MyMarks</h1>
+  		
+  		<div style="width: 100%; height: 175px; overflow: auto; align: center;">
+  		  		
+  		  	<input type="text" id="myInput" onkeyup="searchTable()" placeholder="Search ...">
+  		  		
+  			<table border=1 frame=void rules=rows class="grid" id="myTable" style="margin-left: auto; margin-right: auto;">
+  			<!-- Define colgroup to specify spacing -->
+  				<colgroup>
+  					<col span="1" style="width: 0%;">
+  					<col span="1" style="width: 40%;">
+  					<col span="1" style="width: 40%;">
+  					<col span="1" style="width: 10%;">
+  					<col span="1" style="width: 10%;">
+  				</colgroup>
+  				
+  			
+  				<thead>
+  					<tr>
+  						<!-- first display none id used for aligning/default display-->
+  						<th style="display: none; cursor: pointer;" align="center">id</th>
+  						<th style="cursor: pointer;" onclick="sortTable(1)" align="center">Course</th>
+  						<th style="cursor: pointer;" onclick="sortTable(2)" align="center">Assignment Name</th>
+  						<th style="cursor: pointer;" onclick="sortTable(3)" align="center">Total Points</th>
+  						<th style="cursor: pointer;" onclick="sortTable(4)" align="center">Points Achieved</th>
+  					</tr>
+  				</thead>
+  				<tbody>
+  					<tr>
+  						<td style="display: none;" property_value="0" property_name="id" align="center">0</td>
+  						<td property_value="Intro to CS" property_name="Course Name" align="center">Intro to CS</td>
+  						<td property_value="Quiz 1" property_name="Assignment Name" align="center">Quiz 1</td>
+  						<td property_value="50" property_name="Total Points" align="center">50</td>
+  						<td property_value="40" property_name="Points Achieved" align="center">40</td>
+  					</tr>
+  					<tr>
+  						<td style="display: none;" property_value="0" property_name="id" align="center">0</td>
+  						<td property_value="Intro to Math" property_name="Course Name" align="center">Intro to Math</td>
+  						<td property_value="Quiz 2" property_name="Assignment Name" align="center">Quiz 2</td>
+  						<td property_value="100" property_name="Total Points" align="center">100</td>
+  						<td property_value="80" property_name="Points Achieved" align="center">80</td>
+  					</tr>
+  					<tr>
+  						<td style="display: none;" property_value="0" property_name="id" align="center">0</td>
+  						<td property_value="Intermediate CS" property_name="Course Name" align="center">Intermediate CS</td>
+  						<td property_value="Test 1" property_name="Assignment Name" align="center">Test 1</td>
+  						<td property_value="200" property_name="Total Points" align="center">200</td>
+  						<td property_value="180" property_name="Points Achieved" align="center">180</td>
+  					</tr>
+  				</tbody>
+  			</table>
+  		</div>
+  		
+  		<div id="bottom">
+    	<p><a href="logout.action">Logout</a></p>
+    	</div>
+    	
+    	<script>
+			function searchTable() {
+  				// Declare variables
+  				var input, filter, table, tr, td, i, txtValue;
+  				input = document.getElementById("myInput");
+  				filter = input.value.toUpperCase();
+  				table = document.getElementById("myTable");
+  				tr = table.getElementsByTagName("tr");
+
+  				// Loop through all table rows, and hide those who don't match the search query
+  				// start at 1 to skip header row
+ 	 			for (i = 1; i < tr.length; i++) {
+    				td = tr[i];
+    				if (td) {
+      					txtValue = td.textContent || td.innerText;
+      					if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        					tr[i].style.display = "";
+      					} else {
+        					tr[i].style.display = "none";
+      					}
+    				}
+  				}
+			}
+		</script>
+
+		<script>
+			function sortTable(n) {
+				var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+				table = document.getElementById("myTable");
+				switching = true;
+				// Set the sorting direction to ascending:
+				dir = "asc";
+				/* Make a loop that will continue until
+				no switching has been done: */
+				while (switching) {
+					// Start by saying: no switching is done:
+					switching = false;
+					rows = table.rows;
+					/* Loop through all table rows (except the
+					first, which contains table headers): */
+					for (i = 1; i < (rows.length - 1); i++) {
+						// Start by saying there should be no switching:
+						shouldSwitch = false;
+						/* Get the two elements you want to compare,
+						one from current row and one from the next: */
+						x = rows[i].getElementsByTagName("TD")[n];
+						y = rows[i + 1].getElementsByTagName("TD")[n];
+						/* Check if the two rows should switch place,
+						based on the direction, asc or desc: */
+						if (dir == "asc") {
+							if (x.innerHTML.toLowerCase() > y.innerHTML
+									.toLowerCase()) {
+								// If so, mark as a switch and break the loop:
+								shouldSwitch = true;
+								break;
+							}
+						} else if (dir == "desc") {
+							if (x.innerHTML.toLowerCase() < y.innerHTML
+									.toLowerCase()) {
+								// If so, mark as a switch and break the loop:
+								shouldSwitch = true;
+								break;
+							}
+						}
+					}
+					if (shouldSwitch) {
+						/* If a switch has been marked, make the switch
+						and mark that a switch has been done: */
+						rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+						switching = true;
+						// Each time a switch is done, increase this count by 1:
+						switchcount++;
+					} else {
+						/* If no switching has been done AND the direction is "asc",
+						set the direction to "desc" and run the while loop again. */
+						if (switchcount == 0 && dir == "asc") {
+							dir = "desc";
+							switching = true;
+						}
+					}
+				}
+			}
+		</script>
+	</body> 	
+</html>

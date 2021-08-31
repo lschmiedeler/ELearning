@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+		"-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+		"http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+    <constant name="struts.devMode" value="true" />
+
+    <package name="basicstruts2" extends="struts-default">
+
+        <action name="login" class="actions.MainAction" method="executeLogin">
+            <result name="loginSuccessStudent">/student_dashboard.jsp</result>
+            <result name="loginSuccessTeacher">/teacher_dashboard.jsp</result>
+            <result name="loginFailure">/index.jsp</result>
+        </action>
+
+		<action name="*">
+    		<result>/genericError.jsp</result>
+		</action>
+
+        <action name="enterNewAccountInfo">
+            <result>/createNewAccount.jsp</result>
+        </action>
+        
+        <action name="createNewAccount" class="actions.MainAction" method="executeCreateNewAccount">
+			<exception-mapping exception="Exception" result = "createNewAccountFailure" />
+            <result name="createNewAccountSuccessStudent">/student_dashboard.jsp</result>
+            <result name="createNewAccountSuccessTeacher">/teacher_dashboard.jsp</result>
+            <result name="createNewAccountFailureUsernameTaken">/createNewAccount.jsp</result>
+			<result name="createNewAccountFailure">/genericError.jsp</result>
+        </action>
+        
+        <action name="studentDash">
+        	<result>/student_dashboard.jsp</result>
+        </action>
+        
+        <action name="teacherDash">
+        	<result>/teacher_dashboard.jsp</result>
+        </action>
+        
+        <action name="enterNewCourseInfo" class = "actions.MainAction" method = "executeSelectStudents">
+			<exception-mapping exception="Exception" result = "selectStudentsFailure" />
+        	<result name = "selectStudentsSuccess">/createNewCourse.jsp</result>
+			<result name = "selectStudentsFailure">/genericError.jsp</result>
+        </action>
+        
+        <action name="createNewCourse" class = "actions.MainAction" method = "executeCreateNewCourse">
+			<exception-mapping exception="Exception" result = "createNewCourseFailure" />
+        	<result name="createNewCourseSuccess">/teacher_dashboard.jsp</result>
+        	<result name="createNewCourseFailureCourseTaken" type="redirectAction">enterNewCourseInfo</result>
+        	<result name="createNewCourseFailure">/genericError.jsp</result>
+		</action>
+        
+        <action name="enterNewAssignmentInfo" class = "actions.MainAction" method = "executeSelectCourse">
+			<exception-mapping exception="Exception" result = "selectCourseFailure" />
+            <result name = "selectCourseSuccess">/createNewAssignment.jsp</result>
+			<result name = "selectCourseFailure">/genericError.jsp</result>
+        </action>
+        
+        <action name="createNewAssignment" class = "actions.MainAction" method = "executeCreateNewAssignment">
+			<exception-mapping exception="Exception" result = "createNewAssignmentFailure" />
+        	<result name="createNewAssignmentSuccess">/teacher_dashboard.jsp</result>
+        	<result name="createNewAssignmentFailureAssignmentTaken" type="redirectAction">/enterNewAssignmentInfo</result>
+        	<result name="createNewAssignmentFailure">/genericError.jsp</result>
+		</action>
+        
+        <action name="logout" class = "actions.MainAction" method = "executeLogout">
+        	<result name="logoutSuccess">/index.jsp</result>
+        </action>
+        
+        <action name="selectCourseForGrades" class = "actions.MainAction" method = "executeSelectCourseForGrades">
+			<exception-mapping exception="Exception" result = "selectCourseForGradesFailure" />
+            <result name = "selectCourseForGradesSuccess">/selectCourseForGrades.jsp</result>
+			<result name = "selectCourseForGradesFailure">/genericError.jsp</result>
+        </action>
+        
+        <action name="selectAssignmentForGrades" class = "actions.MainAction" method = "executeSelectAssignmentForGrades">
+			<exception-mapping exception="Exception" result = "selectAssignmentForGradesFailure" />
+            <result name = "selectAssignmentForGradesSuccess">/selectAssignmentForGrades.jsp</result>
+			<result name = "selectAssignmentForGradesFailure">/genericError.jsp</result>
+        </action>
+        
+        <action name="selectCourseForGradesView" class = "actions.MainAction" method = "executeSelectCourseForGrades">
+			<exception-mapping exception="Exception" result = "selectCourseForGradesFailure" />
+            <result name = "selectCourseForGradesSuccess">/selectCourseForGradesView.jsp</result>
+        	<result name = "selectCourseForGradesFailure"></result>
+		</action>
+        
+        <action name="selectAssignmentForGradesView" class = "actions.MainAction" method = "executeSelectAssignmentForGrades">
+			<exception-mapping exception="Exception" result = "selectAssignmentForGradesFailure" />
+            <result name = "selectAssignmentForGradesSuccess">/selectAssignmentForGradesView.jsp</result>
+        	<result name = "selectAssignmentForGradesFailure">/genericError.jsp</result>
+		</action>
+        
+        <action name = "enterGrades" class = "actions.MainAction" method = "executeEnterGrades">
+			<exception-mapping exception="Exception" result = "enterGradesFailure" />
+        	<result name = "enterGradesSuccess">/enterGrades.jsp</result>
+       		<result name = "enterGradesFailure">/genericError.jsp</result>
+		</action>
+       	
+       	<action name = "setGrades" class = "actions.MainAction" method = "executeSetGrades">
+			<exception-mapping exception="Exception" result = "setGradesFailure" />
+       		<result name = "setGradesSuccess">/teacher_dashboard.jsp</result>
+			<result name = "setGradesFailure">/genericError.jsp</result>
+       	</action>
+       	
+       	<action name = "viewGradesStudent" class = "actions.MainAction" method = "viewGradesStudent">
+			<exception-mapping exception="Exception" result = "viewGradesStudentFailure" />
+       		<result name = "viewGradesStudentSuccess">/viewGradesStudent.jsp</result>
+			<result name = "viewGradesStudentFailure">/genericError.jsp</result>
+       	</action>
+       	
+       	<action name = "viewGradesTeacher" class = "actions.MainAction" method = "viewGradesTeacher">
+			<exception-mapping exception="Exception" result = "viewGradesTeacherFailure" />
+       		<result name = "viewGradesTeacherSuccess">/viewGradesTeacher.jsp</result>
+			<result name = "viewGradesTeacherFailure">/genericError.jsp</result>
+       	</action>
+       	
+       	<action name = "returnToDashboard" class = "actions.MainAction" method = "executeReturnToDashboard">
+       		<result name = "returnToDashboardSuccessStudent">/student_dashboard.jsp</result>
+       		<result name = "returnToDashboardSuccessTeacher">/teacher_dashboard.jsp</result>
+			<result name = "returnToDashboardFailure">/genericError.jsp</result>
+       	</action>
+    </package>
+</struts>

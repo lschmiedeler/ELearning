@@ -1,0 +1,35 @@
+body {
+	background-color:#d0e4fe;
+}
+
+h1 {
+	color:#400040;
+	text-align:center;
+}
+
+p {
+	font-family:"Courier";
+	font-size:20px;
+}
+
+nav ul { 
+	overflow-y:scroll;
+	list-style-position: inside;
+	max-width: 300px;
+}
+
+
+.right {
+	float: right;
+	max-width: 300px;
+}
+
+.left {
+	float: left;
+	max-width: 300px;
+}
+
+.center {
+	margin: auto;
+	max-width: 300px;
+}

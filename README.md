@@ -1,2 +1,2 @@
 # ELearning
-CSCI 3300 team project at Saint Louis University.
+CSCI 3300 (Software Engineering) team project at Saint Louis University.
